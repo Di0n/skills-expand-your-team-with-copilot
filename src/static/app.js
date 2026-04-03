@@ -475,38 +475,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // Share an activity on social media or copy its link to the clipboard
   function shareActivity(platform, activityName) {
     const details = allActivities[activityName];
-    const activityUrl =
-      window.location.origin +
-      window.location.pathname +
-      "?activity=" +
-      encodeURIComponent(activityName);
-    const shareText =
-      "Check out " +
-      activityName +
-      " at Mergington High School! " +
-      details.description;
+    const activityUrl = `${window.location.origin}${window.location.pathname}?activity=${encodeURIComponent(activityName)}`;
+    const shareText = `Check out ${activityName} at Mergington High School! ${details.description}`;
 
     if (platform === "twitter") {
       window.open(
-        "https://twitter.com/intent/tweet?text=" +
-          encodeURIComponent(shareText) +
-          "&url=" +
-          encodeURIComponent(activityUrl),
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(activityUrl)}`,
         "_blank"
       );
     } else if (platform === "facebook") {
       window.open(
-        "https://www.facebook.com/sharer/sharer.php?u=" +
-          encodeURIComponent(activityUrl),
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(activityUrl)}`,
         "_blank"
       );
     } else if (platform === "whatsapp") {
       window.open(
-        "https://api.whatsapp.com/send?text=" +
-          encodeURIComponent(shareText + " " + activityUrl),
+        `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + activityUrl)}`,
         "_blank"
       );
     } else if (platform === "copy") {
+      if (!navigator.clipboard) {
+        showMessage("Copying is not supported in this browser.", "error");
+        return;
+      }
       navigator.clipboard
         .writeText(activityUrl)
         .then(() => {
@@ -617,10 +608,10 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="share-buttons">
         <span class="share-label">Share:</span>
-        <button class="share-btn share-twitter" data-activity="${name}" data-platform="twitter" title="Share on X (Twitter)">𝕏</button>
-        <button class="share-btn share-facebook" data-activity="${name}" data-platform="facebook" title="Share on Facebook">f</button>
-        <button class="share-btn share-whatsapp" data-activity="${name}" data-platform="whatsapp" title="Share on WhatsApp">💬</button>
-        <button class="share-btn share-copy" data-activity="${name}" data-platform="copy" title="Copy link">🔗</button>
+        <button class="share-btn share-twitter" data-activity="${name}" data-platform="twitter" title="Share on X (Twitter)" aria-label="Share on X (Twitter)">𝕏</button>
+        <button class="share-btn share-facebook" data-activity="${name}" data-platform="facebook" title="Share on Facebook" aria-label="Share on Facebook">f</button>
+        <button class="share-btn share-whatsapp" data-activity="${name}" data-platform="whatsapp" title="Share on WhatsApp" aria-label="Share on WhatsApp">💬</button>
+        <button class="share-btn share-copy" data-activity="${name}" data-platform="copy" title="Copy link" aria-label="Copy link">🔗</button>
       </div>
     `;
 
