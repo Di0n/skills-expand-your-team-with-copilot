@@ -440,13 +440,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Apply difficulty filter
-      if (currentDifficulty === "") {
-        // "All" selected: show all activities
-      } else {
-        // Show only activities matching the selected difficulty
-        if ((details.difficulty || "") !== currentDifficulty) {
-          return;
-        }
+      if (currentDifficulty !== "" && (details.difficulty || "") !== currentDifficulty) {
+        return;
       }
 
       // Apply search filter
